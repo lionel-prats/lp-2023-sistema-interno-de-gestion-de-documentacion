@@ -1,0 +1,56 @@
+php artisan make:model Category -m
+php artisan make:model File -m
+php artisan make:model UserCategory -m
+php artisan make:model File -m 
+
+php artisan make:seeder UserSeeder
+php artisan make:seeder CategorySeeder
+php artisan make:seeder UserCategorySeeder
+php artisan make:seeder FileSeeder
+
+CONFIGURACIONES PARA GENERAR ARCHIVOS FAKE vvv
+
+php artisan make:factory FileFactory
+
+en /config/filesystems.php tenemos definido el driver por defecto vvv
+'default' => env('FILESYSTEM_DISK', 'local') -> 1er elemento del array
+
+la constante FILESYSTEM_DISK esta en .env
+su valor por defecto: FILESYSTEM_DISK=local
+significa que, por defecto, los archivos se van a guardar en 
+/storage/app
+* desde el navegador solo podemos acceder a archivos alojados en la carpeta public
+* esto es asi por un tema de seguridad
+* por defecto en un proyecto Laravel, dentro de /storage/app hay una carpeta /public
+
+nosotros vamos a definir que los los archivos se guarden en /storage/app/public
+para eso tenemos que cambiar el driver por defecto
+vamos a .env y reemplazamos el valor por defecto "local", por "public" vvv
+FILESYSTEM_DISK=public
+
+luego generaremos un acceso directo de /storage/app/public en la carpteta /public para que se pueda acceder a nuestros archivos desde el navegador, con el siguiente comando vvv
+php artisan storage:link
+este comando genera el siguiente acceso directo vvv
+/storage/app/public
+acceso directo -> /public/storage
+
+*** esto es correcto. 
+*** corri php artisan migrate:fresh --seed sin modificar el .env
+*** lo especificado en DatabaseSeeder.php vvv
+
+Storage::deleteDirectory('direccion/belen-conforti'); 
+Storage::makeDirectory('direccion/belen-conforti'); 
+
+*** genero /storage/app/direccion/belen-conforti
+*** modifique el .env y volvi a probar y /direccion/belen-conforti se genero donde debe ser vvv
+
+/storage/app/public/direccion/belen-conforti
+
+*** y con eso, el acceso directo en la carpeta publica vvv
+
+/public/storage/direccion/belen-conforti
+
+seguimos en ImageFactory.php
+
+$this->faker-image() 
+el metodo image de faquer va a descargar una imagen en la carpeta que especifiquemos, y va a retornar la direccion donde se encuentra esa imagen

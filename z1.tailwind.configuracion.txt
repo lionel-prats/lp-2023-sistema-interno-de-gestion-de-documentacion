@@ -1,0 +1,15 @@
+1. npm install -D tailwindcss postcss autoprefixer 
+
+2. npx tailwindcss init -p
+* crea los archivos de configuracion de tailwind y postcss 
+
+3. configuro tailwind.config.js
+
+4. configuro /resources/css/app.css
+
+5. para trabajar en local, en dos consolas: 
+- php artisan serve
+- npm run dev
+
+6. agrego la siguiente linea en el <head> de /resources/views/layouts/app.blade.php 
+@vite('resources/css/app.css')

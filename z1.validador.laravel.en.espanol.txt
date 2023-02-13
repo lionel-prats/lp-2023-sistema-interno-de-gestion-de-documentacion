@@ -1,0 +1,6 @@
+https://github.com/MarcoGomesr/laravel-validation-en-espanol
+
+git clone https://github.com/MarcoGomesr/laravel-validation-en-espanol.git resources/lang/
+
+en /config/app.php, hay que modificar el valor de 'locale'=> 'en'
+por 'locale' => 'es',
