@@ -9,11 +9,13 @@ use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
-    public function index () {
+    public function index()
+    {
         return view('auth.register');
     }
 
-    public function store (Request $request) {
+    public function store(Request $request)
+    {
 
         $request->request->add([
             "slug" => Str::slug($request->slug)
@@ -21,8 +23,8 @@ class RegisterController extends Controller
 
         $this->validate($request, [
             'name' => 'required',
-            'slug' => ['required','unique:users'],
-            'email' => ['required','unique:users','email'],
+            'slug' => ['required', 'unique:users'],
+            'email' => ['required', 'unique:users', 'email'],
             'password' => 'required|confirmed'
         ]);
 
@@ -32,11 +34,12 @@ class RegisterController extends Controller
             'password' => Hash::make($request->password),
             'slug' => $request->slug
         ]);
-        
-        dd($request->get('name'),
-            $request->get('slug'),
-            $request->get('email'),
-            $request->get('password')
-        );
+
+        // helper para autenticar un usuario
+        auth()->attempt($request->only('email', 'password'));
+        // si hay usuario autenticado, auth()->user() se llenara con los datos de dicho usuario
+        // verificacion de la linea anterior ---> dd(auth()->user());
+
+        return redirect()->route('profile.index');
     }
 }
